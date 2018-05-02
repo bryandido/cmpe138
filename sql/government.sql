@@ -7,10 +7,11 @@ use government;
 CREATE TABLE citizen (
 	ssn				char(9),
     first_name		varchar(15),
-    middle_initial	char(1),
+    middle_initial	varchar(1) NULL,
     last_name		varchar(15),
     birth_date		date,
     address			varchar(50),
+    password		varchar(5) NULL,
     primary key (ssn)
 );
 
@@ -54,12 +55,23 @@ CREATE TABLE can_be (
 		ON UPDATE CASCADE
 );
 
+
+CREATE TABLE government (
+	department_id	varchar(15),
+    primary key (department_id)
+    
+);
+
 CREATE TABLE workforce (
-	tax_id		integer,
-    employer	varchar(15),
-    ssn			char(9),
+	tax_id			integer,
+    employer		varchar(15),
+    ssn				char(9),
+    department_id	varchar(15),
     primary key (tax_id),
     foreign key (ssn) references citizen(ssn)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	foreign key (department_id) references government(department_id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
@@ -72,15 +84,6 @@ CREATE TABLE joins (
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
     foreign key (tax_id) references workforce(tax_id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
-
-CREATE TABLE government (
-	department_id	varchar(15),
-    tax_id			integer,
-    primary key (department_id),
-    foreign key (tax_id) references workforce (tax_id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );

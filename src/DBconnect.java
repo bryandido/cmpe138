@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBconnect {
-	
+	Connection connection;
 	public void connect(){
 		
 		String PUBLIC_DNS = "cmpe138-db.c4uxpsipwhcm.us-west-1.rds.amazonaws.com";
@@ -24,7 +24,7 @@ public class DBconnect {
 	    }
 
 	    System.out.println("MySQL JDBC Driver Registered!");
-	    Connection connection = null;
+	    connection = null;
 
 	    try {
 	        connection = DriverManager.
@@ -38,5 +38,21 @@ public class DBconnect {
 	    } else {
 	        System.out.println("FAILURE! Failed to make connection!");
 	    }
+	}
+	
+	public boolean check() {
+		if (connection != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public Connection getConnection() {
+		if (connection != null) {
+			return connection;
+		}
+		else {
+			return null;
+		}
 	}
 }
