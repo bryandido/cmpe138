@@ -9,7 +9,7 @@ public class DBconnect {
 		
 		String PUBLIC_DNS = "cmpe138-db.c4uxpsipwhcm.us-west-1.rds.amazonaws.com";
 		String PORT = "3306";
-		String DATABASE = "cmpe138-db";
+		String DATABASE = "government";
 		String REMOTE_DATABASE_USERNAME = "team";
 		String DATABASE_USER_PASSWORD = "team123";
 		
