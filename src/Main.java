@@ -5,7 +5,9 @@ public class Main {
 		//Connects to government database
 		DBconnect mysql = new DBconnect();
 		mysql.connect();
-		Start app = new Start(mysql);
+		if (mysql.check()) {
+			Start app = new Start(mysql);
+		}
 	}
 
 }

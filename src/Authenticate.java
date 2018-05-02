@@ -18,6 +18,7 @@ public class Authenticate {
 	
 	//SQL query
 	public boolean authenticate() {
+		String query = "";
 		return true;
 	}
 }
