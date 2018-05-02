@@ -7,25 +7,27 @@ public class Citizen {
 	
 	Citizen(DBconnect conn){
 		int x = 1;
-		String position;
-		String lastName;
-		String firstName;
-		String lawsOrBills;
-		String lawNo;
-		String billNo;
-		boolean lawNum, billNum = false;
+		String position = null;
+		String lastName = null;
+		String firstName = null;
+		String lawsOrBills = null;
+		String lawNo = null;
+		String billNo = null;
+		boolean lawNum = false, billNum = false;
+		String input = null;
 		
 		Scanner scanner = new Scanner(System.in);
-		String input = scanner.nextLine();
 		do {
+			
+			String sql;
 			System.out.println("Please select an option: ");
 			System.out.println("1: Search for individuals");
 			System.out.println("2: View laws");
 			System.out.println("3: Exit");
+			input = scanner.nextLine();
 			
 			if(input == "1")
 			{	
-				String sql;
 				System.out.println("Please select their position within our country: ");
 				System.out.println("1: Citizen");
 				System.out.println("2: Immigrant");
@@ -41,25 +43,27 @@ public class Citizen {
 				//Write query here
 				if(position == "1")
 				{
-					sql = "SELECT last_name, first_name, address FROM Citizen WHERE last_name = " 
+					sql = "SELECT last_name, first_name, address FROM citizen WHERE last_name = " 
 							+ lastName + 
 							" AND first_name = "
 							+ firstName;
 				}
 				if(position == "2")
 				{
-					sql = "SELECT last_name, first_name FROM Immigrant WHERE last_name = " 
+					sql = "SELECT last_name, first_name FROM immigrant WHERE last_name = " 
 							+ lastName + 
 							" AND first_name = "
 							+ firstName;
 				}
 				if(position == "3")
 				{
-					sql = "SELECT last_name, first_name, address FROM Politician INNER JOIN Citizen WHERE Politician. = " 
-							+ lastName + 
+					sql = "SELECT last_name, first_name, address FROM politician INNER JOIN citizen WHERE politician.ssn = citizen.snn AND " 
+							+ "last_name = "+ lastName + 
 							" AND first_name = "
 							+ firstName;
 				}
+				
+				//get resultSet here
 			}
 			if(input == "2")
 			{
@@ -82,6 +86,7 @@ public class Citizen {
 					else {
 						//lawNum is kept false;
 					}
+					
 				}
 				if(lawsOrBills == "2")
 				{
@@ -99,7 +104,31 @@ public class Citizen {
 					}
 				}
 				
+				
 				//Write query here
+				
+				if(lawNum == true)
+				{
+					sql = "SELECT law_id, description FROM law WHERE law_id = " + lawNo;
+				}
+				else if(billNum == true)
+				{
+					sql = "SELECT bill_id, description FROM law WHERE bill_id = " + billNo;
+				}
+				else if(lawNum == false)
+				{
+					sql = "SELECT law_id, description FROM law";
+				}
+				else if(billNum == false)
+				{
+					sql = "SELECT bill_id, description FROM law";
+				}
+				else
+				{
+					System.out.println("Error in creating search query, please contact an administrator at: 555-5555-5555");
+				}
+				
+				//get result set here
 			}
 			if(input == "3")
 			{
