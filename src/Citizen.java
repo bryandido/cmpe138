@@ -5,7 +5,7 @@ import com.mysql.cj.xdevapi.Statement;
 
 public class Citizen {
 	
-	public static void main(Connection conn){
+	Citizen(DBconnect conn){
 		int x = 1;
 		String position;
 		String lastName;
