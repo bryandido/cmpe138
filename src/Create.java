@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Create {
@@ -11,8 +15,10 @@ public class Create {
 	private String address;
 	private String politicianID;
 	private String militaryID;
+	private Connection con;
 	
-	Create(char c){
+	Create(char c, Connection conn){
+		con = conn;
 		sc = new Scanner(System.in);
 		if (c == 'p') { // if politician
 			System.out.println("Registation for Politician");
@@ -42,10 +48,9 @@ public class Create {
 		
 	}
 	public void RegisterCivilian() {
+		String query ="";
 		System.out.println("Enter your SSN: ");
 		SSN = sc.next();
-		System.out.println("Enter your password: ");
-		password = sc.next();
 		System.out.println("Enter your first name: ");
 		firstName = sc.next();
 		System.out.println("Enter your middle initial: ");
@@ -54,8 +59,26 @@ public class Create {
 		lastName = sc.next();
 		System.out.println("Enter your birthDate");
 		birthDate = sc.next();
+		sc.nextLine();
 		System.out.println("Enter address: ");
-		address = sc.next();
-		//query
+		address = sc.nextLine();
+		System.out.println("Enter your password: ");
+		password = sc.next();
+		
+		query = "INSERT INTO citizen VALUES ("+SSN+", '"+firstName+"', '"+middleInitial+"', '"+lastName+"', '"+birthDate+"', '"+address+"', '"+password+"', null, null, null, null)";
+		System.out.println(query);
+		//Query
+		DBquery(query);
+	}
+	public void DBquery(String q) {
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			stmt.executeUpdate(q); //Executes Query
+			System.out.println("Success!");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Create Query
 	}
 }
