@@ -6,7 +6,7 @@ public class Main {
 		DBconnect mysql = new DBconnect();
 		mysql.connect();
 		if (mysql.check()) {
-			Start app = new Start(mysql);
+			Start app = new Start(mysql.getConnection());
 		}
 	}
 

@@ -6,14 +6,10 @@ import java.sql.Statement;
 
 public class Citizen {
 	
-	Citizen(DBconnect conn){
-		int closeCitizen = 1;
-		int position = 0;
-		int lawsOrBills = 0;
-		int lawNo = 0;
-		int billNo = 0;
-		int input = 0;
+	Citizen(Connection conn){
+		int x = 1;
 		
+		String position = null;
 		String lastName = null;
 		String firstName = null;
 		
