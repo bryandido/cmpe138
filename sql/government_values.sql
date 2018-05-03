@@ -66,8 +66,15 @@ INSERT INTO head_of_state VALUES ('222222222', '2015-2020');
 INSERT INTO military_branch VALUES ('1 Thomas Road', '222222222');
 
 INSERT INTO military_personnel  VALUES ('1', '2010-07-20', NULL, 'SFC', '1 Thomas Road');
-UPDATE citizen set politician_id = '333333333' WHERE ssn = '000001111';
+UPDATE citizen SET military_id = 1 WHERE ssn = '192837465';
+UPDATE citizen SET politician_id = '333333333' WHERE ssn = '000001111';
+
+INSERT INTO bill VALUES ('B254-1', 'A really important bill.');
+INSERT INTO bill VALUES ('B926-2', 'Another really important bill.');
+INSERT INTO bill VALUES ('B164', 'This bill is meaningless.');
 
 INSERT INTO law VALUES ('L254-1', 'A really important law.');
+INSERT INTO law VALUES ('L926-2', 'Another really important law.');
 
-
+INSERT INTO gets_passed VALUES ('B254-1', 'L254-1');
+INSERT INTO gets_passed VALUES ('B926-2', 'L926-2');
