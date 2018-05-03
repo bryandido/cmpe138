@@ -45,11 +45,11 @@ public class Authenticate {
 	        	return false;
 	        }
 	        else {
-	        do {
-	            for(int i = 1; i < columnsNumber; i++)
-	                System.out.print(rs.getString(i) + " ");
-	            System.out.println();
-	        } while (rs.next());
+		        do {
+		            for(int i = 1; i < columnsNumber; i++)
+		                System.out.print(rs.getString(i) + " ");
+		            System.out.println();
+		        } while (rs.next());
 	        }
 		}catch(SQLException e ) {
 	        System.out.println(e);

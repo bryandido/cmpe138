@@ -8,8 +8,8 @@ public class Start {
 	HashMap<String, String> hmap = new HashMap<String, String>(){{
 		put("c","citizen");
 		put("citizen","ssn");
-		put("m","military");
-		put("military","military_id");
+		put("m","military_personnel");
+		put("military_personnel","military_id");
 		put("p","politician");
 		put("politician","politician_id");
 		put("s","senator");
@@ -42,7 +42,14 @@ public class Start {
 			}
 			else if (person == 'c' || person == 'm' || person =='p') {
 				exit = true;
+				System.out.println("Do you have an account? (Y/N)");
+				if(sc.next().charAt(0)!='y') {
+					Create account = new Create(person);
+				} else {
+				}
+				
 				auth = new Authenticate(conn,hmap,person);
+				
 				if (auth.authenticate()==true) {
 					System.out.println("You are logged in!");
 					if (person == 'c') {
@@ -52,7 +59,8 @@ public class Start {
 					} else {
 						//Politician politician = new Politician(db);
 					}
-				} else {
+				} 
+				else {
 					System.out.println("Wrong login! Program exiting.");
 				}
 			}
