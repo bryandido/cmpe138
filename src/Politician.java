@@ -962,11 +962,13 @@ public class Politician {
 				}
 				else if(billCrOrDel == 3)
 				{
-					sql = "SELECT * FROM bill";
+					sql = "SELECT bill_id, description FROM bill";
 					con = conn;
 					try {
 						statement = con.createStatement();
 						boolean insertCheck = statement.execute(sql);
+						
+						
 					
 						/*if(insertCheck == true)
 						{
