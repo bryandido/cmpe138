@@ -92,6 +92,53 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
+				        /*try {
+				            if (con != null)
+				                con.close();
+				        } catch (SQLException se) {
+				            se.printStackTrace();
+				        }*/
+				    }
+							+ "'" + firstName + "'";
+					
+					//System.out.println(sql);
+					System.out.println("For debugging - Line 56 - creating Citizen sql resultSet");
+					
+					con = conn.getConnection();
+					try {
+						statement = con.createStatement();
+						ResultSet rs = statement.executeQuery(sql);
+					
+						while(rs.next())
+						{
+							String column1 = rs.getString("last_name");
+							String column2 = rs.getString("first_name");
+							String column3 = rs.getString("address");
+							
+							System.out.println("Last Name: " + column1);
+							System.out.println("First Name: " + column2);
+							System.out.println("Address: " + column3);
+						}
+						rs.close();
+						statement.close();
+					
+					}	
+					catch (SQLException se)
+					{
+						//Handle errors for JDBC
+				        se.printStackTrace();
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+					finally {
+					//If con  & stmt not closed then try again and check for exceptions
+				        try {
+				            if (statement != null)
+				                statement.close();
+				        } catch (SQLException se2) {
+				        }//cant do anything
 				        try {
 				            if (con != null)
 				                con.close();
@@ -144,12 +191,12 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
-				        try {
+				        /*try {
 				            if (con != null)
 				                con.close();
 				        } catch (SQLException se) {
 				            se.printStackTrace();
-				        }
+				        }*/
 				    }
 					
 					
@@ -200,12 +247,12 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
-				        try {
+				        /*try {
 				            if (con != null)
 				                con.close();
 				        } catch (SQLException se) {
 				            se.printStackTrace();
-				        }
+				        }*/
 				    }
 				}
 				
@@ -276,7 +323,7 @@ public class Citizen {
 				//get result set here
 				if((lawNum == true && billNum == false) || (lawNum == false && billNum == false))
 				{
-					System.out.println("For debugging - Line 56 - creating Citizen sql resultSet");
+					System.out.println("For debugging - Line 279 - creating law sql resultSet");
 					
 					con = conn.getConnection();
 					try {
@@ -313,17 +360,17 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
-				        try {
+				        /*try {
 				            if (con != null)
 				                con.close();
 				        } catch (SQLException se) {
 				            se.printStackTrace();
-				        }
+				        }*/
 				    }
 				}
 				else if((lawNum == false && billNum == true) || (lawNum == false && billNum == false))
 				{
-					System.out.println("For debugging - Line 56 - creating Citizen sql resultSet");
+					System.out.println("For debugging - Line 326 - creating bill sql resultSet");
 					
 					con = conn.getConnection();
 					try {
@@ -360,12 +407,12 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
-				        try {
+				        /*try {
 				            if (con != null)
 				                con.close();
 				        } catch (SQLException se) {
 				            se.printStackTrace();
-				        }
+				        }*/
 				    }
 				}
 				
@@ -377,6 +424,12 @@ public class Citizen {
 			
 		}while (closeCitizen == 0);
 		
+		try {
+            if (con != null)
+                con.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
 		scanner.close();	
 	}
 
