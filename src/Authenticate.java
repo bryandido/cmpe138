@@ -36,18 +36,26 @@ public class Authenticate {
 		System.out.println("Char '"+person+"' is "+hmap.get(Character.toString(person))+" with type "+hmap.get(hmap.get(Character.toString(person))));
 		
 		if (person == 'm') {
-			query = "SELECT password FROM military_personnel INNER JOIN citizen ON citizen.military_id = military_personnel.military_id WHERE military_personnel.military_id='"+username+"'";
+			query = "SELECT password "
+					+ "FROM military_personnel "
+					+ "INNER JOIN citizen ON citizen.military_id = military_personnel.military_id "
+					+ "WHERE military_personnel.military_id='"+username+"'";
 			if(password.isEmpty()) {
 				password = null;
 			}
 		} else if (person == 'p') {
-			query = "SELECT password FROM politician INNER JOIN citizen ON citizen.politician_id = politician.politician_id WHERE politician.politician_id='"+username+"'";
+			query = "SELECT password "
+					+ "FROM politician "
+					+ "INNER JOIN citizen ON citizen.politician_id = politician.politician_id "
+					+ "WHERE politician.politician_id='"+username+"'";
 			if(password.isEmpty()) {
 				password = null;
 			}
 		}
 		else {
-			query = "SELECT password FROM citizen WHERE ssn='"+username+"'";
+			query = "SELECT password "
+					+ "FROM citizen "
+					+ "WHERE ssn='"+username+"'";
 			if(password.isEmpty()) {
 				password = null;
 			}
