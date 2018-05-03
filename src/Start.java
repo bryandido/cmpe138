@@ -51,9 +51,9 @@ public class Start {
 				if (auth.authenticate()==true) {
 					System.out.println("You are logged in!");
 					if (person == 'c') {
-						//Citizen citizen = new Citizen(db);
+						Citizen citizen = new Citizen(db);
 					} else if (person == 'm') {
-						//Military military = new Military(db);
+						Military military = new Military(db);
 					} else {
 						Politician politician = new Politician(db);
 					}
@@ -66,5 +66,6 @@ public class Start {
 				System.out.println("Invalid choice. Try again.");
 			}
 		} while (exit == false);
+		sc.close();
 	}
 }

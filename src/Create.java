@@ -29,7 +29,6 @@ public class Create {
 			RegisterCivilian();
 			System.out.println("Now login...");
 		}
-		sc.close();
 	}
 	public void RegisterPolitician() {
 		RegisterCivilian();
