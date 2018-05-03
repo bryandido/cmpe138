@@ -90,7 +90,6 @@ CREATE TABLE joins (
 
 CREATE TABLE justice_department (
 	department_id	varchar(15),
-    position		varchar(15),
     primary key (department_id),
     foreign key (department_id) references government(department_id)
 		ON DELETE CASCADE
@@ -120,23 +119,64 @@ CREATE TABLE imprisons (
 		ON UPDATE CASCADE
 );
 
-CREATE TABLE military_personnel (
-	military_id	varchar(9),
-    start_date	date,
-    end_date	date,
-    rank		varchar(10),
-    ssn			varchar(9),
-    primary key (military_id),
+CREATE TABLE politician (
+	politician_id	varchar(9),
+    ssn				char(9),
+    primary key (politician_id),
     foreign key (ssn) references citizen(ssn)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
 
+CREATE TABLE head_of_state (
+	politician_id	varchar(9),
+    term			char(9),
+    primary key (politician_id),
+    foreign key (politician_id) references politician(politician_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE votes_for (
+	ssn				char(9),
+	politician_id	varchar(9),
+    primary key (ssn, politician_id),
+    foreign key (ssn) references citizen(ssn)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+    foreign key (politician_id) references politician(politician_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+-- term format '2000-2004'
+CREATE TABLE senator (
+	politician_id	varchar(9),
+    state			varchar(15),
+    term			char(9),		
+    primary key (politician_id),
+    foreign key (politician_id) references politician(politician_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
 CREATE TABLE military_branch (
-	hq_address	varchar(50),
-    military_id	varchar(9),
+	hq_address		varchar(50),
+    politician_id	varchar(9),
     primary key (hq_address),
-    foreign key (military_id) references military_personnel(military_id)
+    foreign key (politician_id) references head_of_state(politician_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE military_personnel (
+	military_id	varchar(9),
+    start_date	date,
+    end_date	date,
+    rank		varchar(10),
+    hq_address	varchar(50),
+    primary key (military_id),
+    foreign key (hq_address) references military_branch(hq_address)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
@@ -164,38 +204,6 @@ CREATE TABLE army (
     tank_type	varchar(20),
     primary key (hq_address),
     foreign key (hq_address) references military_branch(hq_address)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
-
-CREATE TABLE politician (
-	politician_id	varchar(9),
-    ssn			char(9),
-    primary key (politician_id),
-    foreign key (ssn) references citizen(ssn)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
-
-CREATE TABLE votes_for (
-	ssn				char(9),
-	politician_id	varchar(9),
-    primary key (ssn, politician_id),
-    foreign key (ssn) references citizen(ssn)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
-    foreign key (politician_id) references politician(politician_id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
-
--- term format '2000-2004'
-CREATE TABLE senator (
-	politician_id	varchar(9),
-    state			varchar(15),
-    term			char(9),		
-    primary key (politician_id),
-    foreign key (politician_id) references politician(politician_id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
@@ -230,27 +238,10 @@ CREATE TABLE votes_on (
 		ON UPDATE CASCADE
 );
 
-CREATE TABLE head_of_state (
-	politician_id	varchar(9),
-    term			char(9),
-    address			varchar(50),
-    primary key (politician_id),
-    foreign key (politician_id) references politician(politician_id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
-	foreign key (address) references military_branch(hq_address)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
-
 CREATE TABLE law (
 	law_id		varchar(10),
     description	varchar(100),
-    bill_id		varchar(10),
-    primary key (law_id),
-    foreign key (bill_id) references bill(bill_id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+    primary key (law_id)
 );
 
 CREATE TABLE follows (
@@ -264,3 +255,25 @@ CREATE TABLE follows (
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
+
+CREATE TABLE gets_passed (
+	bill_id		varchar(10),
+    law_id		varchar(10),
+    primary key (bill_id, law_id),
+    foreign key (bill_id) references bill(bill_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	foreign key (law_id) references law(law_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+ALTER TABLE citizen
+ADD COLUMN prisoner_id 		integer,
+ADD COLUMN tax_id 			integer,
+ADD COLUMN military_id 		varchar(9),
+ADD COLUMN politician_id 	varchar(9),
+ADD foreign key (prisoner_id) references criminal(prisoner_id),
+ADD foreign key (tax_id) references workforce(tax_id),
+ADD foreign key (military_id) references military_personnel(military_id),
+ADD foreign key (politician_id) references politician(politician_id);
