@@ -966,8 +966,25 @@ public class Politician {
 					con = conn;
 					try {
 						statement = con.createStatement();
-						boolean insertCheck = statement.execute(sql);
-						
+						ResultSet rs = statement.executeQuery(sql);
+					
+						while(rs.next())
+						{
+							if(rs.wasNull())
+							{
+								System.out.println("NULL");
+							}
+							else
+							{
+								String column1 = rs.getString("law_id");
+								String column2 = rs.getString("description");
+								
+								System.out.println("Law Id: " + column1);
+								System.out.println("description: " + column2);
+							}
+						}
+						rs.close();
+						statement.close();
 						
 					
 						/*if(insertCheck == true)
