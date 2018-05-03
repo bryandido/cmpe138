@@ -65,12 +65,8 @@ CREATE TABLE government (
 CREATE TABLE workforce (
 	tax_id			integer,
     employer		varchar(15),
-    ssn				char(9),
     department_id	varchar(15),
     primary key (tax_id),
-    foreign key (ssn) references citizen(ssn)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
 	foreign key (department_id) references government(department_id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
@@ -121,11 +117,7 @@ CREATE TABLE imprisons (
 
 CREATE TABLE politician (
 	politician_id	varchar(9),
-    ssn				char(9),
-    primary key (politician_id),
-    foreign key (ssn) references citizen(ssn)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+    primary key (politician_id)
 );
 
 CREATE TABLE head_of_state (
