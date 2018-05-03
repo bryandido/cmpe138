@@ -11,6 +11,7 @@ public class Citizen {
 		int position=0;
 		int lawsOrBills=0;
 		int lawNo=0;
+		int billNo=0;
 		int input=0;
 		
 		String lastName = null;
