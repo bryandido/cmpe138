@@ -1,18 +1,19 @@
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 import java.sql.Statement;
+import java.util.Scanner;
 
-public class Citizen {
-	
-	Citizen(DBconnect conn){
-		int closeCitizen = 1;
+public class Politician {
+
+	Politician(DBconnect conn){
+		int closePolitician = 1;
 		int position = 0;
 		int lawsOrBills = 0;
-		int lawNo = 0;
-		int billNo = 0;
+		int lawNo = 0; //convert to string later
+		int billNo = 0; //convert to string later
 		int input = 0;
+		int id = 0; //convert to string later
 		
 		String lastName = null;
 		String firstName = null;
@@ -28,8 +29,11 @@ public class Citizen {
 			String sql = null;
 			System.out.println("Please select an option: ");
 			System.out.println("1: Search for individuals");
-			System.out.println("2: View laws");
-			System.out.println("3: Exit");
+			System.out.println("2: Add/Edit Citizens");
+			System.out.println("3: Edit Laws or Bills");
+			System.out.println("4: Create Bills");
+			System.out.println("5: Vote on Bills");
+			System.out.println("6: Exit");
 			input = scanner.nextInt();
 			
 			if(input == 1)
@@ -49,13 +53,13 @@ public class Citizen {
 				//Write query here
 				if(position == 1)
 				{
-					sql = "SELECT last_name, first_name, address FROM citizen WHERE last_name = " 
+					sql = "SELECT * FROM citizen WHERE last_name = " 
 							+ "'" + lastName + "'" + 
 							" AND first_name = "
 							+ "'" + firstName + "'";
 					
 					//System.out.println(sql);
-					System.out.println("For debugging - Line 58 - creating Citizen sql resultSet");
+					System.out.println("For debugging - Line 62 - creating Citizen sql resultSet");
 					
 					con = conn.getConnection();
 					try {
@@ -70,13 +74,27 @@ public class Citizen {
 							}
 							else
 							{
-								String column1 = rs.getString("last_name");
+								String column1 = rs.getString("SSN");
 								String column2 = rs.getString("first_name");
-								String column3 = rs.getString("address");
+								String column3 = rs.getString("middle_initial");
+								String column4 = rs.getString("last_name");
+								String column5 = rs.getString("birth_date");
+								String column6 = rs.getString("address");
+								String column7 = rs.getString("password");
+								String column8 = rs.getString("prisoner_id");
+								String column9 = rs.getString("tax_id");
+								String column10 = rs.getString("military_id");
 								
-								System.out.println("Last Name: " + column1);
+								System.out.println("SSN: " + column1);
 								System.out.println("First Name: " + column2);
-								System.out.println("Address: " + column3);
+								System.out.println("Middle Initial: " + column3);
+								System.out.println("Last Name: " + column4);
+								System.out.println("Birth Date: " + column5);
+								System.out.println("Address: " + column6);
+								System.out.println("Password: " + column7);
+								System.out.println("Prisoner Id: " + column8);
+								System.out.println("Tax Id: " + column9);
+								System.out.println("Military Id: " + column10);
 							}
 						}
 						rs.close();
@@ -109,14 +127,14 @@ public class Citizen {
 				}
 				if(position == 2)
 				{
-					sql = "SELECT last_name, first_name FROM immigrant WHERE last_name = " 
+					sql = "SELECT * FROM immigrant WHERE last_name = " 
 							+ "'" + lastName + "'" + 
 							" AND first_name = "
 							+ "'" + firstName + "'";
 					
 					//System.out.println(sql);
 					
-					System.out.println("For debugging - Line 119 - creating Immigrant sql resultSet");
+					System.out.println("For debugging - Line 137 - creating Immigrant sql resultSet");
 					
 					con = conn.getConnection();
 					try {
@@ -131,11 +149,21 @@ public class Citizen {
 							}
 							else
 							{
-								String column1 = rs.getString("last_name");
-								String column2 = rs.getString("first_name");
+								String column1 = rs.getString("visa_number");
+								String column2 = rs.getString("visa_type");
+								String column3 = rs.getString("date_issues");
+								String column4 = rs.getString("expiration_date");
+								String column5 = rs.getString("first_name");
+								String column6 = rs.getString("middle_initial");
+								String column7 = rs.getString("last_name");
 								
-								System.out.println("Last Name: " + column1);
-								System.out.println("First Name: " + column2);
+								System.out.println("visa_number: " + column1);
+								System.out.println("visa_type: " + column2);
+								System.out.println("date_issues: " + column3);
+								System.out.println("expiration_date: " + column4);
+								System.out.println("first_name: " + column5);
+								System.out.println("middle_initial: " + column6);
+								System.out.println("last_name: " + column7);
 							}
 						}
 						rs.close();
@@ -170,14 +198,14 @@ public class Citizen {
 				}
 				if(position == 3)
 				{
-					sql = "SELECT last_name, first_name, address FROM politician INNER JOIN citizen ON politician.ssn = citizen.ssn WHERE " 
+					sql = "SELECT * FROM politician INNER JOIN citizen ON politician.ssn = citizen.ssn WHERE " 
 							+ "last_name = "+ "'" + lastName + "'" + 
 							" AND first_name = "
 							+ "'" + firstName + "'";
 					
 					//System.out.println(sql);
 					
-					System.out.println("For debugging - Line 180 - creating Citizen sql resultSet");
+					System.out.println("For debugging - Line 208 - creating Citizen sql resultSet");
 					
 					con = conn.getConnection();
 					try {
@@ -192,18 +220,33 @@ public class Citizen {
 							}
 							else
 							{
-								String column1 = rs.getString("last_name");
+								String column1 = rs.getString("SSN");
 								String column2 = rs.getString("first_name");
-								String column3 = rs.getString("address");
+								String column3 = rs.getString("middle_initial");
+								String column4 = rs.getString("last_name");
+								String column5 = rs.getString("birth_date");
+								String column6 = rs.getString("address");
+								String column7 = rs.getString("password");
+								String column8 = rs.getString("prisoner_id");
+								String column9 = rs.getString("tax_id");
+								String column10 = rs.getString("military_id");
+								String column11 = rs.getString("politician_id");
 								
-								System.out.println("Last Name: " + column1);
+								System.out.println("SSN: " + column1);
 								System.out.println("First Name: " + column2);
-								System.out.println("Address: " + column3);
+								System.out.println("Middle Initial: " + column3);
+								System.out.println("Last Name: " + column4);
+								System.out.println("Birth Date: " + column5);
+								System.out.println("Address: " + column6);
+								System.out.println("Password: " + column7);
+								System.out.println("Prisoner Id: " + column8);
+								System.out.println("Tax Id: " + column9);
+								System.out.println("Military Id: " + column10);
+								System.out.println("politician Id: " + column11);
 							}
 						}
 						rs.close();
 						statement.close();
-					
 					}	
 					catch (SQLException se)
 					{
@@ -407,7 +450,7 @@ public class Citizen {
 			}
 			else if(input == 3)
 			{
-				closeCitizen = 0;
+				closePolitician = 0;
 			}
 			
 			//Spacing for next query
@@ -416,7 +459,7 @@ public class Citizen {
 			System.out.println("");
 			System.out.println("");
 			
-		}while (closeCitizen != 0);
+		}while (closePolitician != 0);
 		
 		//connection will be closed in start
 		/*try {
