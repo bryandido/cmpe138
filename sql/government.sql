@@ -96,11 +96,7 @@ CREATE TABLE justice_department (
 CREATE TABLE criminal (
 	prisoner_id	integer,
     sentence	varchar(10),
-    ssn			varchar(9),
-    primary key (prisoner_id),
-    foreign key (ssn) references citizen(ssn)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+    primary key (prisoner_id)
 );
 
 CREATE TABLE imprisons (
@@ -120,6 +116,7 @@ CREATE TABLE politician (
     primary key (politician_id)
 );
 
+-- term format '2000-2004'
 CREATE TABLE head_of_state (
 	politician_id	varchar(9),
     term			char(9),
