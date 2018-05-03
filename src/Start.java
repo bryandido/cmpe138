@@ -45,7 +45,7 @@ public class Start {
 					} else if (person == 'm') {
 						//Military military = new Military(db);
 					} else {
-						//Politician politician = new Politician(db);
+						Politician politician = new Politician(db);
 					}
 				} else {
 					System.out.println("Wrong login! Program exiting.");

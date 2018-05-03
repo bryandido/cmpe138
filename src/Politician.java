@@ -30,9 +30,8 @@ public class Politician {
 			System.out.println("1: Search for individuals");
 			System.out.println("2: Add/Edit Citizens/Immigrants");
 			System.out.println("3: Edit Bills");
-			System.out.println("4: Create/Delete Bills");
-			System.out.println("5: Vote on Bills");
-			System.out.println("6: Exit");
+			System.out.println("4: Create/Delete/View Bills");
+			System.out.println("5: Exit");
 			input = scanner.nextInt();
 			
 			if(input == 1)
@@ -284,7 +283,7 @@ public class Politician {
 				{
 					System.out.println("Do you want to add a citizen or an immigrant?");
 					System.out.println("1: Add citizen");
-					System.out.println("1: Add immigrant");
+					System.out.println("2: Add immigrant");
 					int citOrImm = scanner.nextInt();
 					
 					if(citOrImm == 1)
@@ -310,8 +309,8 @@ public class Politician {
 						String address = scanner.next();
 						//System.out.println("Password: "); Set to null
 						//System.out.println("Prisoner Id: "); Set to null
-						System.out.println("Tax Id: ");
-						String tax_id = scanner.next();
+						/*System.out.println("Tax Id: ");
+						String tax_id = scanner.next();*/
 						//System.out.println("Military Id: "); Set to null
 						//System.out.println("politician Id: "); Set to null
 						
@@ -319,8 +318,8 @@ public class Politician {
 								+ " middle_initial = " + "'" + middle_initial + "'," + " last_name = " + "'" + last_name + "',"
 								+ " birth_day = " + "'" + birth_date + "'," + " address = " + "'" + address + "', "
 								+ " tax_id = " + "'" + tax_id + "'";*/
-						sql = "INSERT INTO citizens (ssn, first_name, middle_initial, last_name, birth_date, address, password, prisoner_id, tax_id, military_id, politician_id)"
-								+ "VALUES(" + "'" + ssn + "', " + "'" + first_name + "', " + "'" + middle_initial + "', " + "'" + last_name + "', " + "'" + birth_date + "', " + "'" + address + "', " + "null , " + "null, " + "'" + tax_id + "', " + "null, " + "null" + ")";
+						sql = "INSERT INTO citizen (ssn, first_name, middle_initial, last_name, birth_date, address, password, prisoner_id, tax_id, military_id, politician_id)"
+								+ "VALUES(" + "'" + ssn + "', " + "'" + first_name + "', " + "'" + middle_initial + "', " + "'" + last_name + "', " + "'" + birth_date + "', " + "'" + address + "', " + "null , " + "null, "  + "null, " + "null, " + "null" + ")";
 						
 						System.out.println("For debugging - Line 326 - creating Citizen sql resultSet");
 						
@@ -329,14 +328,14 @@ public class Politician {
 							statement = con.createStatement();
 							boolean insertCheck = statement.execute(sql);
 						
-							if(insertCheck == true)
+							/*if(insertCheck == true)
 							{
 								System.out.println("Successfully inserted");
 							}
 							else
 							{
 								System.out.println("Error when creating a citizen object, please ask for administrator assistance");
-							}
+							}*/
 							
 							statement.close();
 						
@@ -406,14 +405,14 @@ public class Politician {
 							statement = con.createStatement();
 							boolean insertCheck = statement.execute(sql);
 						
-							if(insertCheck == true)
+							/*if(insertCheck == true)
 							{
 								System.out.println("Successfully inserted");
 							}
 							else
 							{
 								System.out.println("Error when creating a immigrant object, please ask for administrator assistance");
-							}
+							}*/
 							
 							statement.close();
 						
@@ -478,7 +477,7 @@ public class Politician {
 							System.out.println("8: Military Id");
 							System.out.println("9: Politician Id");
 							System.out.println("10: Exit");
-							
+							quit = scanner.nextInt();
 							/*if(quit == 1)
 							{
 								System.out.println("Please enter a new SSN: ");
@@ -608,14 +607,14 @@ public class Politician {
 							statement = con.createStatement();
 							boolean insertCheck = statement.execute(sql);
 						
-							if(insertCheck == true)
+							/*if(insertCheck == true)
 							{
 								System.out.println("Successfully updated");
 							}
 							else
 							{
 								System.out.println("Error when editing a citizen object, please ask for administrator assistance");
-							}
+							}*/
 							
 							statement.close();
 						
@@ -667,6 +666,7 @@ public class Politician {
 							System.out.println("5: Middle Initial ");
 							System.out.println("6: Last Name ");
 							System.out.println("7: Exit");
+							quit = scanner.nextInt();
 							
 							if(quit == 1)
 							{
@@ -756,14 +756,14 @@ public class Politician {
 							statement = con.createStatement();
 							boolean insertCheck = statement.execute(sql);
 						
-							if(insertCheck == true)
+							/*if(insertCheck == true)
 							{
 								System.out.println("Successfully updated");
 							}
 							else
 							{
 								System.out.println("Error when creating a immigrant object, please ask for administrator assistance");
-							}
+							}*/
 							
 							statement.close();
 						
@@ -811,14 +811,14 @@ public class Politician {
 						statement = con.createStatement();
 						boolean insertCheck = statement.execute(sql);
 					
-						if(insertCheck == true)
+						/*if(insertCheck == true)
 						{
 							System.out.println("Successfully updated");
 						}
 						else
 						{
 							System.out.println("Error when editing a citizen object, please ask for administrator assistance");
-						}
+						}*/
 						
 						statement.close();
 					
@@ -854,6 +854,7 @@ public class Politician {
 				System.out.println("Please select an option: ");
 				System.out.println("1: Create bill");
 				System.out.println("2: Delete bill");
+				System.out.println("3: View all bills");
 				int billCrOrDel = scanner.nextInt();
 				
 				if(billCrOrDel == 1)
@@ -871,15 +872,15 @@ public class Politician {
 					try {
 						statement = con.createStatement();
 						boolean insertCheck = statement.execute(sql);
-					
-						if(insertCheck == true)
+						
+						/*if(insertCheck == true)
 						{
 							System.out.println("Successfully inserted");
 						}
 						else
 						{
 							System.out.println("Error when creating a bill object, please ask for administrator assistance");
-						}
+						}*/
 						
 						statement.close();
 					
@@ -923,14 +924,14 @@ public class Politician {
 						statement = con.createStatement();
 						boolean insertCheck = statement.execute(sql);
 					
-						if(insertCheck == true)
+						/*if(insertCheck == true)
 						{
 							System.out.println("Successfully inserted");
 						}
 						else
 						{
 							System.out.println("Error when deleting a bill object, please ask for administrator assistance");
-						}
+						}*/
 						
 						statement.close();
 					
@@ -959,15 +960,52 @@ public class Politician {
 				        }*/
 				    }
 				}
-				
+				else if(billCrOrDel == 3)
+				{
+					sql = "SELECT * FROM bill";
+					con = conn;
+					try {
+						statement = con.createStatement();
+						boolean insertCheck = statement.execute(sql);
+					
+						/*if(insertCheck == true)
+						{
+							System.out.println("Successfully inserted");
+						}
+						else
+						{
+							System.out.println("Error when deleting a bill object, please ask for administrator assistance");
+						}*/
+						
+						statement.close();
+					
+					}	
+					catch (SQLException se)
+					{
+						//Handle errors for JDBC
+				        se.printStackTrace();
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+					finally {
+					//If con  & stmt not closed then try again and check for exceptions
+				        try {
+				            if (statement != null)
+				                statement.close();
+				        } catch (SQLException se2) {
+				        }//cant do anything
+				        /*try {
+				            if (con != null)
+				                con.close();
+				        } catch (SQLException se) {
+				            se.printStackTrace();
+				        }*/
+				    }
+				}
 			}
-			
-			
 			else if(input == 5)
-			{
-				
-			}
-			else if(input == 6)
 			{
 				closePolitician = 0;
 			}
