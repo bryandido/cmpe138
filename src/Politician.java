@@ -10,10 +10,9 @@ public class Politician {
 		int closePolitician = 1;
 		int position = 0;
 		int lawsOrBills = 0;
-		int lawNo = 0; //convert to string later
-		int billNo = 0; //convert to string later
+		//int lawNo = 0; //convert to string later
+		String billNo = null; //convert to string later
 		int input = 0;
-		int id = 0; //convert to string later
 		
 		String lastName = null;
 		String firstName = null;
@@ -446,102 +445,493 @@ public class Politician {
 				}
 				if(position == 2)
 				{
+					System.out.println("Do you want to edit a citizen or an immigrant: ");
+					System.out.println("1: Citizen");
+					System.out.println("2: Immigrant");
+					int citOrImm = scanner.nextInt();
 					
+					if(citOrImm == 1)
+					{
+						
+						String SSN = null;
+						
+						System.out.println("Please enter the citizen's SSN");
+						SSN = scanner.next();
+						sql = "UPDATE citizen SET ";
+						//System.out.println("DEBUGGING SQL -- CITIZEN EDIT");
+						//System.out.println("sql");
+						
+						int quit = 0; 
+						String first_name = null, middle_initial = null, last_name = null, birth_date = null, address = null,/* password = null, */prisoner_id = null, tax_id = null, military_id = null, politician_id = null, exit = null; 
+						boolean /*ssn = false,*/ fn = false, mi = false, ln = false, bd = false, addr = false, /*pass = false,*/  pr_id = false, t_id = false, m_id = false, p_id = false;
+						do {
+							System.out.println("Please choose what values you want to edit: ");
+							//System.out.println("1: SSN ");
+							System.out.println("1: First Name ");
+							System.out.println("2: Middle Initial ");
+							System.out.println("3: Last Name ");
+							System.out.println("4: Birth Date");
+							System.out.println("5: Address");
+							//System.out.println("7: Password");
+							System.out.println("6: Prisoner Id");
+							System.out.println("7: Tax Id");
+							System.out.println("8: Military Id");
+							System.out.println("9: Politician Id");
+							System.out.println("10: Exit");
+							
+							/*if(quit == 1)
+							{
+								System.out.println("Please enter a new SSN: ");
+								SSN = scanner.next();
+								ssn = true;
+							}*/
+							if(quit == 1)
+							{
+								System.out.println("Please enter a new First Name: ");
+								first_name = scanner.next();
+								fn = true;
+							}
+							else if(quit == 2)
+							{
+								System.out.println("Please enter a new Middle Initial: ");
+								middle_initial = scanner.next();
+								mi = true;
+							}
+							else if(quit == 3)
+							{
+								System.out.println("Please enter a new Last Name: ");
+								last_name = scanner.next();
+								ln = true;
+							}
+							else if(quit == 4)
+							{
+								System.out.println("Please enter a new Birth Date: ");
+								birth_date = scanner.next();
+								bd = true;
+							}
+							else if(quit == 5)
+							{
+								System.out.println("Please enter a new Address: ");
+								address = scanner.next();
+								addr = true;
+							}
+							/*else if(quit == 7)
+							{
+								System.out.println("Please enter a new Password: ");
+								password = scanner.next();
+								pass = true;
+							}*/
+							else if(quit == 6)
+							{
+								System.out.println("Please enter a new Prisoner Id: ");
+								prisoner_id = scanner.next();
+								pr_id = true;
+							}
+							else if(quit == 7)
+							{
+								System.out.println("Please enter a new Tax Id: ");
+								tax_id = scanner.next();
+								t_id = true;
+							}
+							else if(quit == 8)
+							{
+								System.out.println("Please enter a new Military Id: ");
+								military_id = scanner.next();
+								m_id = true;
+							}
+							else if(quit == 9)
+							{
+								System.out.println("Please enter a new Politician Id: ");
+								politician_id = scanner.next();
+								p_id = true;
+							}
+							else if(quit == 10)
+							{
+								System.out.println("Are you sure you want to make these changes?(y/n)");
+								exit = scanner.next();
+								if(exit.equals("y"))
+								{
+									quit = 11;
+								}
+								else {
+									//do nothing
+								}
+							}
+						}while (quit != 11);
+						
+						if(fn == true)
+						{
+							sql = sql + " first_name = " + "'" + first_name + "'";
+						}
+						if(mi == true)
+						{
+							sql = sql + " middle_initial = " + "'" + middle_initial + "'";
+						}
+						if(ln == true)
+						{
+							sql = sql + " last_name = " + "'" + last_name + "'";
+						}
+						if(bd == true)
+						{
+							sql = sql + " birth_date = " + "'" + birth_date + "'";
+						}
+						if(addr == true)
+						{
+							sql = sql + " address = " + "'" + address + "'";
+						}
+						if(pr_id == true)
+						{
+							sql = sql + " prisoner_id = " + "'" + prisoner_id + "'";
+						}
+						if(t_id == true)
+						{
+							sql = sql + " tax_id = " + "'" + tax_id + "'";
+						}
+						if(m_id == true)
+						{
+							sql = sql + " military_id = " + "'" + military_id + "'";
+						}
+						if(p_id == true)
+						{
+							sql = sql + " politician_id = " + "'" + politician_id + "'";
+						}
+						
+						sql = sql + " WHERE ssn = " + "'" + SSN + "'";
+						
+						System.out.println("DEBUGGING SQL -- CITIZEN EDIT -- after adding SQL");
+						System.out.println("sql");
+						
+						System.out.println("For debugging - Line 603 - editing citizen sql resultSet");
+						
+						con = conn;
+						try {
+							statement = con.createStatement();
+							boolean insertCheck = statement.execute(sql);
+						
+							if(insertCheck == true)
+							{
+								System.out.println("Successfully updated");
+							}
+							else
+							{
+								System.out.println("Error when editing a citizen object, please ask for administrator assistance");
+							}
+							
+							statement.close();
+						
+						}	
+						catch (SQLException se)
+						{
+							//Handle errors for JDBC
+					        se.printStackTrace();
+						}
+						catch (Exception e)
+						{
+							e.printStackTrace();
+						}
+						finally {
+						//If con  & stmt not closed then try again and check for exceptions
+					        try {
+					            if (statement != null)
+					                statement.close();
+					        } catch (SQLException se2) {
+					        }//cant do anything
+					        /*try {
+					            if (con != null)
+					                con.close();
+					        } catch (SQLException se) {
+					            se.printStackTrace();
+					        }*/
+					    }
+						
+					}
+					else if(citOrImm == 2)
+					{
+						String VISA_NUMBER = null;
+						
+						System.out.println("Please enter the immigrant's visa number");
+						VISA_NUMBER = scanner.next();
+						sql = "UPDATE immigrant SET ";
+						//System.out.println("DEBUGGING SQL -- IMMIGRANT EDIT");
+						//System.out.println("sql");
+						
+						int quit = 0; 
+						String visa_type = null, date_issued = null, expiration_date = null, first_name = null, middle_initial = null, last_name = null, exit; 
+						boolean vt = false, di = false, ed = false, fn = false, mi = false, ln = false;
+						do {
+							System.out.println("Please choose what values you want to edit: ");
+							System.out.println("1: Visa Type");
+							System.out.println("2: Date Issued");
+							System.out.println("3: Expiration Date");
+							System.out.println("4: First Name ");
+							System.out.println("5: Middle Initial ");
+							System.out.println("6: Last Name ");
+							System.out.println("7: Exit");
+							
+							if(quit == 1)
+							{
+								System.out.println("Please enter a new Visa Type: ");
+								visa_type = scanner.next();
+								vt = true;
+							}
+							else if(quit == 2)
+							{
+								System.out.println("Please enter a new Date Issued: ");
+								date_issued = scanner.next();
+								di = true;
+							}
+							else if(quit == 3)
+							{
+								System.out.println("Please enter a new Expiration Date: ");
+								expiration_date = scanner.next();
+								ed = true;
+							}
+							else if(quit == 4)
+							{
+								System.out.println("Please enter a new First Name: ");
+								first_name = scanner.next();
+								fn = true;
+							}
+							else if(quit == 5)
+							{
+								System.out.println("Please enter a new Middle Initial: ");
+								middle_initial = scanner.next();
+								mi = true;
+							}
+							else if(quit == 6)
+							{
+								System.out.println("Please enter a new Last Name: ");
+								last_name = scanner.next();
+								ln = true;
+							}
+							else if(quit == 7)
+							{
+								System.out.println("Are you sure you want to make these changes?(y/n)");
+								exit = scanner.next();
+								if(exit.equals("y"))
+								{
+									quit = 10;
+								}
+								else {
+									//do nothing
+								}
+							}
+						}while (quit != 10);
+						
+						if(vt == true)
+						{
+							sql = sql + " visa_type = " + "'" + visa_type + "'";
+						}
+						if(di == true)
+						{
+							sql = sql + " date_issued = " + "'" + date_issued + "'";
+						}
+						if(ed == true)
+						{
+							sql = sql + " expiration_date = " + "'" + expiration_date + "'";
+						}
+						if(fn == true)
+						{
+							sql = sql + " first_name = " + "'" + first_name + "'";
+						}
+						if(mi == true)
+						{
+							sql = sql + " middle_initial = " + "'" + middle_initial + "'";
+						}
+						if(ln == true)
+						{
+							sql = sql + " last_name = " + "'" + last_name + "'";
+						}
+			
+						
+						sql = sql + " WHERE visa_number = " + "'" + VISA_NUMBER + "'";
+						
+						System.out.println("DEBUGGING SQL -- IMMIGRANT EDIT -- after adding SQL");
+						System.out.println("sql");
+						
+						System.out.println("For debugging - Line 752 - creating immigrant sql resultSet");
+						
+						con = conn;
+						try {
+							statement = con.createStatement();
+							boolean insertCheck = statement.execute(sql);
+						
+							if(insertCheck == true)
+							{
+								System.out.println("Successfully updated");
+							}
+							else
+							{
+								System.out.println("Error when creating a immigrant object, please ask for administrator assistance");
+							}
+							
+							statement.close();
+						
+						}	
+						catch (SQLException se)
+						{
+							//Handle errors for JDBC
+					        se.printStackTrace();
+						}
+						catch (Exception e)
+						{
+							e.printStackTrace();
+						}
+						finally {
+						//If con  & stmt not closed then try again and check for exceptions
+					        try {
+					            if (statement != null)
+					                statement.close();
+					        } catch (SQLException se2) {
+					        }//cant do anything
+					        /*try {
+					            if (con != null)
+					                con.close();
+					        } catch (SQLException se) {
+					            se.printStackTrace();
+					        }*/
+					    }
+					}
 				}
 			}
 			else if(input == 3)
 			{
-				System.out.println("Do you want to see laws or bills: ");
-				System.out.println("1: Laws");
-				System.out.println("2: Bills");
-				lawsOrBills = scanner.nextInt();
+				System.out.println("Please enter the Bill Id to edit: ");
+				billNo = scanner.next();
 				
-				if(lawsOrBills == 1)
-				{
-					System.out.println("Do you have a specific law number?"
-							+ " If you do not have a specific law number then all laws will be displayed.(y/n) ");
-					String check = scanner.next();
-					if(check == "y")
-					{
-						System.out.println("Enter the la"
-								+ ""
-								+ "w number: ");
-						lawNo = scanner.nextInt();
-						lawNum = true;
-					}
-					else {
-						//lawNum is kept false;
-					}
+				System.out.println("Please enter the Bill Id's new description: ");
+				String description = scanner.next();
+				
+				sql = "UPDATE bill SET description = " + "'" + description + "'" + "WHERE bill_id = " + "'" + billNo + "'";
+				
+				System.out.println("For debugging - Line 809 - editting bill sql resultSet");
 					
-				}
-				if(lawsOrBills == 2)
-				{
-					System.out.println("Do you have a specific bill number?"
-							+ " If you do not have a specific bill number then all laws will be displayed.(y/n) ");
-					String check = scanner.next();
-					if(check == "y")
+				con = conn;
+					try {
+						statement = con.createStatement();
+						boolean insertCheck = statement.execute(sql);
+					
+						if(insertCheck == true)
+						{
+							System.out.println("Successfully updated");
+						}
+						else
+						{
+							System.out.println("Error when editing a citizen object, please ask for administrator assistance");
+						}
+						
+						statement.close();
+					
+					}	
+					catch (SQLException se)
 					{
-						System.out.println("Enter the bill number: ");
-						billNo = scanner.nextInt();
-						billNum = true;
+						//Handle errors for JDBC
+				        se.printStackTrace();
 					}
-					else {
-						//billNum is kept false;
+					catch (Exception e)
+					{
+						e.printStackTrace();
 					}
-				}
+					finally {
+					//If con  & stmt not closed then try again and check for exceptions
+				        try {
+				            if (statement != null)
+				                statement.close();
+				        } catch (SQLException se2) {
+				        }//cant do anything
+				        /*try {
+				            if (con != null)
+				                con.close();
+				        } catch (SQLException se) {
+				            se.printStackTrace();
+				        }*/
+				    }
+				//}
 				
+			}
+			else if(input == 4)
+			{
+				System.out.println("Please select an option: ");
+				System.out.println("1: Create bill");
+				System.out.println("2: Delete bill");
+				int billCrOrDel = scanner.nextInt();
 				
-				//Write query here
-				
-				if(lawNum == true)
+				if(billCrOrDel == 1)
 				{
-					sql = "SELECT law_id, description FROM law WHERE law_id = " + String.valueOf(lawNo);
-				}
-				else if(billNum == true)
-				{
-					sql = "SELECT bill_id, description FROM law WHERE bill_id = " + String.valueOf(billNo);
-				}
-				else if(lawNum == false)
-				{
-					sql = "SELECT law_id, description FROM law";
-				}
-				else if(billNum == false)
-				{
-					sql = "SELECT bill_id, description FROM law";
-				}
-				else
-				{
-					System.out.println("Error in creating search query, please contact an administrator at: 555-5555-5555");
-				}
-				
-				//get result set here
-				if((lawNum == true && billNum == false) || (lawNum == false && billNum == false))
-				{
-					System.out.println("For debugging - Line 300 - creating law sql resultSet");
+					System.out.println("Please enter a bill id: ");
+					String id = scanner.next();
+					System.out.println("Please enter a bill description");
+					String description = scanner.next();
+					
+					sql = "INSERT INTO bill (bill_id, description) VALUES(" + "'" + id + "', " + "'" + description + "'" + ")";
+					
+					System.out.println("For debugging - Line 868 - creating bill sql resultSet");
 					
 					con = conn;
 					try {
 						statement = con.createStatement();
-						ResultSet rs = statement.executeQuery(sql);
+						boolean insertCheck = statement.execute(sql);
 					
-						while(rs.next())
+						if(insertCheck == true)
 						{
-							if(rs.wasNull())
-							{
-								System.out.println("NULL");
-							}
-							else
-							{
-								String column1 = rs.getString("last_name");
-								String column2 = rs.getString("first_name");
-								String column3 = rs.getString("address");
-								
-								System.out.println("Last Name: " + column1);
-								System.out.println("First Name: " + column2);
-								System.out.println("Address: " + column3);
-							}
+							System.out.println("Successfully inserted");
 						}
-						rs.close();
+						else
+						{
+							System.out.println("Error when creating a bill object, please ask for administrator assistance");
+						}
+						
+						statement.close();
+					
+					}	
+					catch (SQLException se)
+					{
+						//Handle errors for JDBC
+				        se.printStackTrace();
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+					finally {
+					//If con  & stmt not closed then try again and check for exceptions
+				        try {
+				            if (statement != null)
+				                statement.close();
+				        } catch (SQLException se2) {
+				        }//cant do anything
+				        /*try {
+				            if (con != null)
+				                con.close();
+				        } catch (SQLException se) {
+				            se.printStackTrace();
+				        }*/
+				    }
+					
+				}
+				else if(billCrOrDel == 2)
+				{
+					System.out.println("Please enter a bill id to delete: ");
+					String id = scanner.next();
+					
+					sql = "DELETE FROM bill WHERE bill_id" + "'" + id + "'";
+					
+					System.out.println("For debugging - Line 919 - deleting bill sql resultSet");
+					
+					con = conn;
+					try {
+						statement = con.createStatement();
+						boolean insertCheck = statement.execute(sql);
+					
+						if(insertCheck == true)
+						{
+							System.out.println("Successfully inserted");
+						}
+						else
+						{
+							System.out.println("Error when deleting a bill object, please ask for administrator assistance");
+						}
+						
 						statement.close();
 					
 					}	
@@ -569,60 +959,12 @@ public class Politician {
 				        }*/
 				    }
 				}
-				else if((lawNum == false && billNum == true) || (lawNum == false && billNum == false))
-				{
-					System.out.println("For debugging - Line 354 - creating bill sql resultSet");
-					
-					con = conn;
-					try {
-						statement = con.createStatement();
-						ResultSet rs = statement.executeQuery(sql);
-					
-						while(rs.next())
-						{
-							if(rs.wasNull())
-							{
-								System.out.println("NULL");
-							}
-							else
-							{
-								String column1 = rs.getString("last_name");
-								String column2 = rs.getString("first_name");
-								String column3 = rs.getString("address");
-								
-								System.out.println("Last Name: " + column1);
-								System.out.println("First Name: " + column2);
-								System.out.println("Address: " + column3);
-							}
-						}
-						rs.close();
-						statement.close();
-					
-					}	
-					catch (SQLException se)
-					{
-						//Handle errors for JDBC
-				        se.printStackTrace();
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-					finally {
-					//If con  & stmt not closed then try again and check for exceptions
-				        try {
-				            if (statement != null)
-				                statement.close();
-				        } catch (SQLException se2) {
-				        }//cant do anything
-				        /*try {
-				            if (con != null)
-				                con.close();
-				        } catch (SQLException se) {
-				            se.printStackTrace();
-				        }*/
-				    }
-				}
+				
+			}
+			
+			
+			else if(input == 5)
+			{
 				
 			}
 			else if(input == 6)
