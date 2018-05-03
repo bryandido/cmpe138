@@ -25,31 +25,40 @@ public class Authenticate {
 		
 		System.out.println("Enter Password: ");
 		password = sc.nextLine();	
+		sc.close();
 	}
 	
 	//SQL query
 	public boolean authenticate() {
 		Statement stmt = null;
-		System.out.println("type is "+person+" value is "+hmap.get(Character.toString(person))+" login type is"+hmap.get(hmap.get(Character.toString(person))));
-		String query = "SELECT * from "+hmap.get(Character.toString(person))+" WHERE "+hmap.get(hmap.get(Character.toString(person)))+"='"+username+"' AND password='"+password+"'";
-		if(password.isEmpty()) {
-			query = "SELECT * from "+hmap.get(Character.toString(person))+" WHERE "+hmap.get(hmap.get(Character.toString(person)))+"='"+username+"' AND password IS NULL";
-		}
+		String query;
 		
+		//Debugging Purposes
+		System.out.println("Char '"+person+"' is "+hmap.get(Character.toString(person))+" with type "+hmap.get(hmap.get(Character.toString(person))));
+		
+		if (person == 'm') {
+			query = "SELECT password FROM military_personnel INNER JOIN citizen ON citizen.military_id = military_id WHERE military_personnel.military_id='"+username+"'";
+		} else if (person == 'p') {
+			query = "SELECT password FROM politician INNER JOIN citizen ON citizen.politician_id = politician_id WHERE politician.politician_id='"+username+"'";
+		}
+		else {
+			query = "SELECT password FROM citizen WHERE ssn='"+username+"'";
+			if(password.isEmpty()) {
+				query = "SELECT password FROM citizen WHERE ssn='"+username+"' AND password IS NULL";
+				password = null;
+			}
+		}
 		try {
 			stmt = db.createStatement(); // Create Query
 	        ResultSet rs = stmt.executeQuery(query); //Executes Query
 	        ResultSetMetaData rsmd = rs.getMetaData();
-	        int columnsNumber = rsmd.getColumnCount();
 	        if (rs.next()==false) {
 	        	return false;
 	        }
 	        else {
-		        do {
-		            for(int i = 1; i < columnsNumber; i++)
-		                System.out.print(rs.getString(i) + " ");
-		            System.out.println();
-		        } while (rs.next());
+		        if (password!=rs.getObject(1)) {
+		        	return false;
+		        }
 	        }
 		}catch(SQLException e ) {
 	        System.out.println(e);

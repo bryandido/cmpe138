@@ -1,7 +1,19 @@
+import java.util.Scanner;
+
 public class Create {
+	Scanner sc;
+	private String SSN;
+	private String password;
+	private String firstName;
+	private String middleInitial;
+	private String lastName;
+	private String birthDate;
+	private String address;
+	private String politicianID;
+	private String militaryID;
 	
 	Create(char c){
-		
+		sc = new Scanner(System.in);
 		if (c == 'p') { // if politician
 			System.out.println("Registation for Politician");
 			RegisterPolitician();
@@ -17,6 +29,7 @@ public class Create {
 			RegisterCivilian();
 			System.out.println("Now login...");
 		}
+		sc.close();
 	}
 	public void RegisterPolitician() {
 		RegisterCivilian();
@@ -27,5 +40,6 @@ public class Create {
 		
 	}
 	public void RegisterCivilian() {
+		System.out.println("Enter your SSN: ");
 	}
 }

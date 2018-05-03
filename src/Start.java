@@ -45,15 +45,13 @@ public class Start {
 				System.out.println("Do you have an account? (Y/N)");
 				if(sc.next().charAt(0)!='y') {
 					Create account = new Create(person);
-				} else {
 				}
-				
 				auth = new Authenticate(conn,hmap,person);
 				
 				if (auth.authenticate()==true) {
 					System.out.println("You are logged in!");
 					if (person == 'c') {
-						Citizen citizen = new Citizen(db);
+						//Citizen citizen = new Citizen(db);
 					} else if (person == 'm') {
 						//Military military = new Military(db);
 					} else {
