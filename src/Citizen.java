@@ -7,9 +7,12 @@ import java.sql.Statement;
 public class Citizen {
 	
 	Citizen(Connection conn){
-		int x = 1;
+		int closeCitizen=1;
+		int position=0;
+		int lawsOrBills=0;
+		int lawNo=0;
+		int input=0;
 		
-		String position = null;
 		String lastName = null;
 		String firstName = null;
 		
@@ -51,22 +54,29 @@ public class Citizen {
 							+ "'" + firstName + "'";
 					
 					//System.out.println(sql);
-					System.out.println("For debugging - Line 56 - creating Citizen sql resultSet");
+					System.out.println("For debugging - Line 58 - creating Citizen sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
 					
 						while(rs.next())
 						{
-							String column1 = rs.getString("last_name");
-							String column2 = rs.getString("first_name");
-							String column3 = rs.getString("address");
-							
-							System.out.println("Last Name: " + column1);
-							System.out.println("First Name: " + column2);
-							System.out.println("Address: " + column3);
+							if(rs.wasNull())
+							{
+								System.out.println("NULL");
+							}
+							else
+							{
+								String column1 = rs.getString("last_name");
+								String column2 = rs.getString("first_name");
+								String column3 = rs.getString("address");
+								
+								System.out.println("Last Name: " + column1);
+								System.out.println("First Name: " + column2);
+								System.out.println("Address: " + column3);
+							}
 						}
 						rs.close();
 						statement.close();
@@ -88,12 +98,12 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
-				        try {
+				        /*try {
 				            if (con != null)
 				                con.close();
 				        } catch (SQLException se) {
 				            se.printStackTrace();
-				        }
+				        }*/
 				    }
 				}
 				if(position == 2)
@@ -105,20 +115,27 @@ public class Citizen {
 					
 					//System.out.println(sql);
 					
-					System.out.println("For debugging - Line 110 - creating Immigrant sql resultSet");
+					System.out.println("For debugging - Line 119 - creating Immigrant sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
 					
 						while(rs.next())
 						{
-							String column1 = rs.getString("last_name");
-							String column2 = rs.getString("first_name");
-							
-							System.out.println("Last Name: " + column1);
-							System.out.println("First Name: " + column2);
+							if(rs.wasNull())
+							{
+								System.out.println("NULL");
+							}
+							else
+							{
+								String column1 = rs.getString("last_name");
+								String column2 = rs.getString("first_name");
+								
+								System.out.println("Last Name: " + column1);
+								System.out.println("First Name: " + column2);
+							}
 						}
 						rs.close();
 						statement.close();
@@ -140,41 +157,48 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
-				        try {
+				        /*try {
 				            if (con != null)
 				                con.close();
 				        } catch (SQLException se) {
 				            se.printStackTrace();
-				        }
+				        }*/
 				    }
 					
 					
 				}
 				if(position == 3)
 				{
-					sql = "SELECT last_name, first_name, address FROM politician INNER JOIN citizen WHERE politician.ssn = citizen.snn AND " 
+					sql = "SELECT last_name, first_name, address FROM politician INNER JOIN citizen ON politician.ssn = citizen.ssn WHERE " 
 							+ "last_name = "+ "'" + lastName + "'" + 
 							" AND first_name = "
 							+ "'" + firstName + "'";
 					
 					//System.out.println(sql);
 					
-					System.out.println("For debugging - Line 164 - creating Citizen sql resultSet");
+					System.out.println("For debugging - Line 180 - creating Citizen sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
 					
 						while(rs.next())
 						{
-							String column1 = rs.getString("last_name");
-							String column2 = rs.getString("first_name");
-							String column3 = rs.getString("address");
-							
-							System.out.println("Last Name: " + column1);
-							System.out.println("First Name: " + column2);
-							System.out.println("Address: " + column3);
+							if(rs.wasNull())
+							{
+								System.out.println("NULL");
+							}
+							else
+							{
+								String column1 = rs.getString("last_name");
+								String column2 = rs.getString("first_name");
+								String column3 = rs.getString("address");
+								
+								System.out.println("Last Name: " + column1);
+								System.out.println("First Name: " + column2);
+								System.out.println("Address: " + column3);
+							}
 						}
 						rs.close();
 						statement.close();
@@ -196,17 +220,17 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
-				        try {
+				        /*try {
 				            if (con != null)
 				                con.close();
 				        } catch (SQLException se) {
 				            se.printStackTrace();
-				        }
+				        }*/
 				    }
 				}
 				
 			}
-			if(input == 2)
+			else if(input == 2)
 			{
 				System.out.println("Do you want to see laws or bills: ");
 				System.out.println("1: Laws");
@@ -272,22 +296,29 @@ public class Citizen {
 				//get result set here
 				if((lawNum == true && billNum == false) || (lawNum == false && billNum == false))
 				{
-					System.out.println("For debugging - Line 56 - creating Citizen sql resultSet");
+					System.out.println("For debugging - Line 300 - creating law sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
 					
 						while(rs.next())
 						{
-							String column1 = rs.getString("last_name");
-							String column2 = rs.getString("first_name");
-							String column3 = rs.getString("address");
-							
-							System.out.println("Last Name: " + column1);
-							System.out.println("First Name: " + column2);
-							System.out.println("Address: " + column3);
+							if(rs.wasNull())
+							{
+								System.out.println("NULL");
+							}
+							else
+							{
+								String column1 = rs.getString("last_name");
+								String column2 = rs.getString("first_name");
+								String column3 = rs.getString("address");
+								
+								System.out.println("Last Name: " + column1);
+								System.out.println("First Name: " + column2);
+								System.out.println("Address: " + column3);
+							}
 						}
 						rs.close();
 						statement.close();
@@ -309,32 +340,39 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
-				        try {
+				        /*try {
 				            if (con != null)
 				                con.close();
 				        } catch (SQLException se) {
 				            se.printStackTrace();
-				        }
+				        }*/
 				    }
 				}
 				else if((lawNum == false && billNum == true) || (lawNum == false && billNum == false))
 				{
-					System.out.println("For debugging - Line 56 - creating Citizen sql resultSet");
+					System.out.println("For debugging - Line 354 - creating bill sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
 					
 						while(rs.next())
 						{
-							String column1 = rs.getString("last_name");
-							String column2 = rs.getString("first_name");
-							String column3 = rs.getString("address");
-							
-							System.out.println("Last Name: " + column1);
-							System.out.println("First Name: " + column2);
-							System.out.println("Address: " + column3);
+							if(rs.wasNull())
+							{
+								System.out.println("NULL");
+							}
+							else
+							{
+								String column1 = rs.getString("last_name");
+								String column2 = rs.getString("first_name");
+								String column3 = rs.getString("address");
+								
+								System.out.println("Last Name: " + column1);
+								System.out.println("First Name: " + column2);
+								System.out.println("Address: " + column3);
+							}
 						}
 						rs.close();
 						statement.close();
@@ -356,23 +394,36 @@ public class Citizen {
 				                statement.close();
 				        } catch (SQLException se2) {
 				        }//cant do anything
-				        try {
+				        /*try {
 				            if (con != null)
 				                con.close();
 				        } catch (SQLException se) {
 				            se.printStackTrace();
-				        }
+				        }*/
 				    }
 				}
 				
 			}
-			if(input == 3)
+			else if(input == 3)
 			{
 				closeCitizen = 0;
 			}
 			
-		}while (closeCitizen == 0);
+			//Spacing for next query
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			
+		}while (closeCitizen != 0);
 		
+		//connection will be closed in start
+		/*try {
+            if (con != null)
+                con.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }*/
 		scanner.close();	
 	}
 
