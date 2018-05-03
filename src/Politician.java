@@ -976,7 +976,7 @@ public class Politician {
 							}
 							else
 							{
-								String column1 = rs.getString("law_id");
+								String column1 = rs.getString("bill_id");
 								String column2 = rs.getString("description");
 								
 								System.out.println("Law Id: " + column1);
