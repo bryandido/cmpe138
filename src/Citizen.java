@@ -10,12 +10,12 @@ public class Citizen {
 		int closeCitizen=1;
 		int position=0;
 		int lawsOrBills=0;
-		int lawNo=0;
-		int billNo=0;
 		int input=0;
 		
 		String lastName = null;
 		String firstName = null;
+		String lawNo = null;
+		String billNo = null;
 		
 		boolean lawNum = false, billNum = false;
 		
@@ -170,14 +170,14 @@ public class Citizen {
 				}
 				if(position == 3)
 				{
-					sql = "SELECT last_name, first_name, address FROM politician INNER JOIN citizen ON politician.ssn = citizen.ssn WHERE " 
+					sql = "SELECT last_name, first_name, address FROM politician INNER JOIN citizen ON politician.politician_id = citizen.politician_id WHERE " 
 							+ "last_name = "+ "'" + lastName + "'" + 
 							" AND first_name = "
 							+ "'" + firstName + "'";
 					
 					//System.out.println(sql);
 					
-					System.out.println("For debugging - Line 180 - creating Citizen sql resultSet");
+					System.out.println("For debugging - Line 180 - creating Politican sql resultSet");
 					
 					con = conn;
 					try {
@@ -243,51 +243,51 @@ public class Citizen {
 					System.out.println("Do you have a specific law number?"
 							+ " If you do not have a specific law number then all laws will be displayed.(y/n) ");
 					String check = scanner.next();
-					if(check == "y")
+					if(check.equals("y"))
 					{
 						System.out.println("Enter the law number: ");
-						lawNo = scanner.nextInt();
+						lawNo = scanner.next();
 						lawNum = true;
 					}
 					else {
-						//lawNum is kept false;
+						lawNum = false;
 					}
 					
 				}
 				if(lawsOrBills == 2)
 				{
-					System.out.println("Do you have a specific bill number?"
-							+ " If you do not have a specific bill number then all laws will be displayed.(y/n) ");
+					System.out.println("Do you have a specific bill number?(y/n)"
+							+ " If you do not have a specific bill number then all laws will be displayed.");
 					String check = scanner.next();
-					if(check == "y")
+					if(check.equals("y"))
 					{
 						System.out.println("Enter the bill number: ");
-						billNo = scanner.nextInt();
+						billNo = scanner.next();
 						billNum = true;
 					}
 					else {
-						//billNum is kept false;
+						billNum = false;
 					}
 				}
 				
 				
 				//Write query here
 				
-				if(lawNum == true)
+				if(lawNum == true && billNum == false)
 				{
-					sql = "SELECT law_id, description FROM law WHERE law_id = " + String.valueOf(lawNo);
+					sql = "SELECT law_id, description FROM law WHERE law_id = " + "'" + lawNo + "'";
 				}
-				else if(billNum == true)
+				else if(billNum == true && lawNum == false)
 				{
-					sql = "SELECT bill_id, description FROM law WHERE bill_id = " + String.valueOf(billNo);
+					sql = "SELECT bill_id, description FROM bill WHERE bill_id = " + "'" + billNo + "'";
 				}
-				else if(lawNum == false)
+				else if(lawNum == false && lawsOrBills == 1)
 				{
 					sql = "SELECT law_id, description FROM law";
 				}
-				else if(billNum == false)
+				else if(billNum == false && lawsOrBills == 2)
 				{
-					sql = "SELECT bill_id, description FROM law";
+					sql = "SELECT bill_id, description FROM bill";
 				}
 				else
 				{
@@ -295,7 +295,7 @@ public class Citizen {
 				}
 				
 				//get result set here
-				if((lawNum == true && billNum == false) || (lawNum == false && billNum == false))
+				if((lawNum == true && billNum == false) || (lawNum == false && lawsOrBills == 1))
 				{
 					System.out.println("For debugging - Line 300 - creating law sql resultSet");
 					
@@ -312,13 +312,11 @@ public class Citizen {
 							}
 							else
 							{
-								String column1 = rs.getString("last_name");
-								String column2 = rs.getString("first_name");
-								String column3 = rs.getString("address");
+								String column1 = rs.getString("law_id");
+								String column2 = rs.getString("description");
 								
-								System.out.println("Last Name: " + column1);
-								System.out.println("First Name: " + column2);
-								System.out.println("Address: " + column3);
+								System.out.println("Law Id: " + column1);
+								System.out.println("description: " + column2);
 							}
 						}
 						rs.close();
@@ -349,7 +347,7 @@ public class Citizen {
 				        }*/
 				    }
 				}
-				else if((lawNum == false && billNum == true) || (lawNum == false && billNum == false))
+				else if((lawNum == false && billNum == true) || (lawsOrBills == 2 && billNum == false))
 				{
 					System.out.println("For debugging - Line 354 - creating bill sql resultSet");
 					
@@ -366,13 +364,11 @@ public class Citizen {
 							}
 							else
 							{
-								String column1 = rs.getString("last_name");
-								String column2 = rs.getString("first_name");
-								String column3 = rs.getString("address");
+								String column1 = rs.getString("bill_id");
+								String column2 = rs.getString("description");
 								
-								System.out.println("Last Name: " + column1);
-								System.out.println("First Name: " + column2);
-								System.out.println("Address: " + column3);
+								System.out.println("Bill Id: " + column1);
+								System.out.println("description: " + column2);
 							}
 						}
 						rs.close();
