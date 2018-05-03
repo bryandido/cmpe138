@@ -5,13 +5,18 @@ import java.sql.Connection;
 
 public class Start {
 	
-	HashMap<Character, String> hmap = new HashMap<Character, String>(){
-		{put('c',"civilian");}
-		{put('m',"military");}
-		{put('p',"politician");}
-		{put('s',"senator");}
-		{put('h',"head_of_state");}
-	};
+	HashMap<String, String> hmap = new HashMap<String, String>(){{
+		put("c","citizen");
+		put("citizen","ssn");
+		put("m","military");
+		put("military","military_id");
+		put("p","politician");
+		put("politician","politician_id");
+		put("s","senator");
+		put("senator","politician_id");
+		put("h","head_of_state");
+		put("head_of_state","politician_id");
+	}};
 	private char person;
 	private Authenticate auth;
 	private Connection db;
@@ -37,7 +42,7 @@ public class Start {
 			}
 			else if (person == 'c' || person == 'm' || person =='p') {
 				exit = true;
-				auth = new Authenticate(conn,hmap);
+				auth = new Authenticate(conn,hmap,person);
 				if (auth.authenticate()==true) {
 					System.out.println("You are logged in!");
 					if (person == 'c') {

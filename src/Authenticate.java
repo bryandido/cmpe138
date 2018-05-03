@@ -10,15 +10,17 @@ public class Authenticate {
 	
 	private String username;
 	private String password;
+	private char person;
 	private Connection db;
-	HashMap<Character, String> hmap;
+	HashMap<String, String> hmap;
 	
-	Authenticate(Connection conn,HashMap h){
+	Authenticate(Connection conn,HashMap h,char p){
 		db=conn;
 		hmap=h;
+		person=p;
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.print("Enter SSN: ");
+		System.out.print("Enter SSN/ID: ");
 		username = sc.nextLine();
 		
 		System.out.println("Enter Password: ");
@@ -28,9 +30,10 @@ public class Authenticate {
 	//SQL query
 	public boolean authenticate() {
 		Statement stmt = null;
-		String query = "SELECT * from citizen WHERE ssn='"+username+"' AND password='"+password+"'";
+		System.out.println("type is "+person+" value is "+hmap.get(Character.toString(person))+" login type is"+hmap.get(hmap.get(Character.toString(person))));
+		String query = "SELECT * from "+hmap.get(Character.toString(person))+" WHERE "+hmap.get(hmap.get(Character.toString(person)))+"='"+username+"' AND password='"+password+"'";
 		if(password.isEmpty()) {
-			query = "SELECT * from citizen WHERE ssn='"+username+"' AND password IS NULL";
+			query = "SELECT * from "+hmap.get(Character.toString(person))+" WHERE "+hmap.get(hmap.get(Character.toString(person)))+"='"+username+"' AND password IS NULL";
 		}
 		
 		try {
