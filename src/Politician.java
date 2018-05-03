@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Politician {
 
-	Politician(DBconnect conn){
+	Politician(Connection conn){
 		int closePolitician = 1;
 		int position = 0;
 		int lawsOrBills = 0;
@@ -29,9 +29,9 @@ public class Politician {
 			String sql = null;
 			System.out.println("Please select an option: ");
 			System.out.println("1: Search for individuals");
-			System.out.println("2: Add/Edit Citizens");
-			System.out.println("3: Edit Laws or Bills");
-			System.out.println("4: Create Bills");
+			System.out.println("2: Add/Edit Citizens/Immigrants");
+			System.out.println("3: Edit Bills");
+			System.out.println("4: Create/Delete Bills");
 			System.out.println("5: Vote on Bills");
 			System.out.println("6: Exit");
 			input = scanner.nextInt();
@@ -61,7 +61,7 @@ public class Politician {
 					//System.out.println(sql);
 					System.out.println("For debugging - Line 62 - creating Citizen sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
@@ -136,7 +136,7 @@ public class Politician {
 					
 					System.out.println("For debugging - Line 137 - creating Immigrant sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
@@ -198,7 +198,7 @@ public class Politician {
 				}
 				if(position == 3)
 				{
-					sql = "SELECT * FROM politician INNER JOIN citizen ON politician.ssn = citizen.ssn WHERE " 
+					sql = "SELECT * FROM politician INNER JOIN citizen ON politician.politician_id = citizen.politician_id WHERE " 
 							+ "last_name = "+ "'" + lastName + "'" + 
 							" AND first_name = "
 							+ "'" + firstName + "'";
@@ -207,7 +207,7 @@ public class Politician {
 					
 					System.out.println("For debugging - Line 208 - creating Citizen sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
@@ -276,6 +276,181 @@ public class Politician {
 			}
 			else if(input == 2)
 			{
+				System.out.println("Do you want to add/edit an immigrant or citizen?");
+				System.out.println("1: Add citizen/immigrant");
+				System.out.println("2: Edit citizen/immigrant");
+				position = scanner.nextInt();
+				
+				if(position == 1)
+				{
+					System.out.println("Do you want to add a citizen or an immigrant?");
+					System.out.println("1: Add citizen");
+					System.out.println("1: Add immigrant");
+					int citOrImm = scanner.nextInt();
+					
+					if(citOrImm == 1)
+					{
+						System.out.println("Please enter the following fields as they appear: ");
+						
+						System.out.println("SSN: ");
+						String ssn = scanner.next();
+						
+						System.out.println("First Name: ");
+						String first_name = scanner.next();
+						
+						System.out.println("Middle Initial: ");
+						String middle_initial = scanner.next();
+						
+						System.out.println("Last Name: ");
+						String last_name = scanner.next();
+						
+						System.out.println("Birth Date: ");
+						String birth_date = scanner.next();
+						
+						System.out.println("Address: ");
+						String address = scanner.next();
+						//System.out.println("Password: "); Set to null
+						//System.out.println("Prisoner Id: "); Set to null
+						System.out.println("Tax Id: ");
+						String tax_id = scanner.next();
+						//System.out.println("Military Id: "); Set to null
+						//System.out.println("politician Id: "); Set to null
+						
+						/*sql = "UPDATE citizen SET SSN = " + "'" + ssn + "'," + " first_name =" + "'" + first_name + "',"
+								+ " middle_initial = " + "'" + middle_initial + "'," + " last_name = " + "'" + last_name + "',"
+								+ " birth_day = " + "'" + birth_date + "'," + " address = " + "'" + address + "', "
+								+ " tax_id = " + "'" + tax_id + "'";*/
+						sql = "INSERT INTO citizens (ssn, first_name, middle_initial, last_name, birth_date, address, password, prisoner_id, tax_id, military_id, politician_id)"
+								+ "VALUES(" + "'" + ssn + "', " + "'" + first_name + "', " + "'" + middle_initial + "', " + "'" + last_name + "', " + "'" + birth_date + "', " + "'" + address + "', " + "null , " + "null, " + "'" + tax_id + "', " + "null, " + "null" + ")";
+						
+						System.out.println("For debugging - Line 326 - creating Citizen sql resultSet");
+						
+						con = conn;
+						try {
+							statement = con.createStatement();
+							boolean insertCheck = statement.execute(sql);
+						
+							if(insertCheck == true)
+							{
+								System.out.println("Successfully inserted");
+							}
+							else
+							{
+								System.out.println("Error when creating a citizen object, please ask for administrator assistance");
+							}
+							
+							statement.close();
+						
+						}	
+						catch (SQLException se)
+						{
+							//Handle errors for JDBC
+					        se.printStackTrace();
+						}
+						catch (Exception e)
+						{
+							e.printStackTrace();
+						}
+						finally {
+						//If con  & stmt not closed then try again and check for exceptions
+					        try {
+					            if (statement != null)
+					                statement.close();
+					        } catch (SQLException se2) {
+					        }//cant do anything
+					        /*try {
+					            if (con != null)
+					                con.close();
+					        } catch (SQLException se) {
+					            se.printStackTrace();
+					        }*/
+					    }
+			
+					}
+					else if(citOrImm == 2)
+					{
+						System.out.println("Please enter the following fields as they appear: ");
+						
+						System.out.println("Visa Number: ");
+						String visa_number = scanner.next();
+						
+						System.out.println("Visa Type: ");
+						String visa_type = scanner.next();
+						
+						System.out.println("Date Issued: ");
+						String date_issued = scanner.next();
+						
+						System.out.println("Expiration Date: ");
+						String expiration_date = scanner.next();
+						
+						System.out.println("First Name: ");
+						String first_name = scanner.next();
+						
+						System.out.println("Middle Initial: ");
+						String middle_initial = scanner.next();
+						
+						System.out.println("Last Name: ");
+						String last_name = scanner.next();
+
+						
+						/*sql = "UPDATE citizen SET SSN = " + "'" + ssn + "'," + " first_name =" + "'" + first_name + "',"
+								+ " middle_initial = " + "'" + middle_initial + "'," + " last_name = " + "'" + last_name + "',"
+								+ " birth_day = " + "'" + birth_date + "'," + " address = " + "'" + address + "', "
+								+ " tax_id = " + "'" + tax_id + "'";*/
+						sql = "INSERT INTO immigrant (visa_number, visa_type, date_issued, expiration_date, first_name, middle_initial, last_name)"
+								+ "VALUES(" + "'" + visa_number + "', " +  "'" + visa_type + "', " + "'" + date_issued + "', " + "'" + expiration_date + "', " + "'" + first_name + "', " + "'" + middle_initial + "', " + "'" + last_name + "'" + ")";
+						
+						System.out.println("For debugging - Line 403 - creating immigrant sql resultSet");
+						
+						con = conn;
+						try {
+							statement = con.createStatement();
+							boolean insertCheck = statement.execute(sql);
+						
+							if(insertCheck == true)
+							{
+								System.out.println("Successfully inserted");
+							}
+							else
+							{
+								System.out.println("Error when creating a immigrant object, please ask for administrator assistance");
+							}
+							
+							statement.close();
+						
+						}	
+						catch (SQLException se)
+						{
+							//Handle errors for JDBC
+					        se.printStackTrace();
+						}
+						catch (Exception e)
+						{
+							e.printStackTrace();
+						}
+						finally {
+						//If con  & stmt not closed then try again and check for exceptions
+					        try {
+					            if (statement != null)
+					                statement.close();
+					        } catch (SQLException se2) {
+					        }//cant do anything
+					        /*try {
+					            if (con != null)
+					                con.close();
+					        } catch (SQLException se) {
+					            se.printStackTrace();
+					        }*/
+					    }
+					}
+				}
+				if(position == 2)
+				{
+					
+				}
+			}
+			else if(input == 3)
+			{
 				System.out.println("Do you want to see laws or bills: ");
 				System.out.println("1: Laws");
 				System.out.println("2: Bills");
@@ -288,7 +463,9 @@ public class Politician {
 					String check = scanner.next();
 					if(check == "y")
 					{
-						System.out.println("Enter the law number: ");
+						System.out.println("Enter the la"
+								+ ""
+								+ "w number: ");
 						lawNo = scanner.nextInt();
 						lawNum = true;
 					}
@@ -342,7 +519,7 @@ public class Politician {
 				{
 					System.out.println("For debugging - Line 300 - creating law sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
@@ -396,7 +573,7 @@ public class Politician {
 				{
 					System.out.println("For debugging - Line 354 - creating bill sql resultSet");
 					
-					con = conn.getConnection();
+					con = conn;
 					try {
 						statement = con.createStatement();
 						ResultSet rs = statement.executeQuery(sql);
@@ -448,7 +625,7 @@ public class Politician {
 				}
 				
 			}
-			else if(input == 3)
+			else if(input == 6)
 			{
 				closePolitician = 0;
 			}
