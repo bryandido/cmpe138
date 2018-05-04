@@ -1,5 +1,8 @@
 import java.util.HashMap;
 import java.util.Scanner;
+
+import org.jasypt.util.password.BasicPasswordEncryptor;
+
 import java.util.HashMap;
 import java.sql.Connection;
 
@@ -20,6 +23,7 @@ public class Start {
 	private char person;
 	private Authenticate auth;
 	private Connection db;
+	BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
 	
 	Start(Connection conn){
 		db = conn;
@@ -44,9 +48,9 @@ public class Start {
 				exit = true;
 				System.out.println("Do you have an account? (Y/N)");
 				if(sc.next().charAt(0)!='y') {
-					Create account = new Create(person, db);
+					Create account = new Create(person, db, passwordEncryptor);
 				}
-				auth = new Authenticate(conn,hmap,person);
+				auth = new Authenticate(conn,hmap,person,passwordEncryptor);
 				
 				if (auth.authenticate()==true) {
 					System.out.println("You are logged in!");

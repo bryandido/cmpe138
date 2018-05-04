@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.jasypt.util.password.BasicPasswordEncryptor;
+
 public class Authenticate {
 	
 	private String username;
@@ -13,12 +15,14 @@ public class Authenticate {
 	private char person;
 	private Connection db;
 	HashMap<String, String> hmap;
+	BasicPasswordEncryptor passwordEncryptor;
 	
-	Authenticate(Connection conn,HashMap h,char p){
+	Authenticate(Connection conn,HashMap h,char p,BasicPasswordEncryptor passEncrpt){
 		db=conn;
 		hmap=h;
 		person=p;
 		Scanner sc = new Scanner(System.in);
+		passwordEncryptor = passEncrpt;
 		
 		System.out.print("Enter SSN/ID: ");
 		username = sc.nextLine();
@@ -68,13 +72,13 @@ public class Authenticate {
 	        	return false;
 	        }
 	        else {
-	        	System.out.println("user: "+username+" pwd: "+password+" db pwd is "+rs.getObject(1));
+	        	//System.out.println("user: "+username+" pwd: "+password+" db pwd is "+rs.getObject(1));
 		        if (password==null) {
 		        	if (password!=rs.getObject(1)) {
 			        	return false;
 			        } 
 		        } else {
-		        	if (!password.equals(rs.getObject(1))) {
+		        	if (passwordEncryptor.checkPassword(password, rs.getObject(1).toString())) {
 			        	return false;
 			        } 
 		        }

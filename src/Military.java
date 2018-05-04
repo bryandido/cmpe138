@@ -3,7 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.sql.Statement;
-
+ 
 public class Military {
 	
 	Military(Connection conn){

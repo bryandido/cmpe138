@@ -7,7 +7,7 @@ public class Main {
 		mysql.connect();
 		if (mysql.check()) {
 			Start app = new Start(mysql.getConnection());
-		}
+		} 
 	}
 
 }

@@ -4,5 +4,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="lib"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/bryan/eclipse-workspace/CMPE138Project/lib/jlib/eclipselink.jar"/>
+	<classpathentry kind="lib" path="lib/jasypt-1.9.2/lib/jasypt-1.9.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
